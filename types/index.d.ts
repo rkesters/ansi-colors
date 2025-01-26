@@ -2,7 +2,6 @@
 // TypeScript definitions for ansi-colors
 // Definitions by: Rogier Schouten <https://github.com/rogierschouten>
 // Integrated by: Jordan Mele <https://github.com/Silic0nS0ldier>
-
 interface SymbolsType {
   /**
    * `undefined` on windows, `✘` on other platforms.
@@ -146,8 +145,20 @@ interface StylesType<T> {
 }
 
 declare namespace ansiColors {
+
+  type ForegroundColorName = 'black' | 'red' | 'green' | 'yellow' | 'blue' | 'magenta' | 'cyan' | 'white' | 'gray' | 'grey';
+  type BackgroundColorName = 'bgBlack' | 'bgRed' | 'bgGreen' | 'bgYellow' | 'bgBlue' | 'bgMagenta' | 'bgCyan' | 'bgWhite'
+  type ForegroundBrightColorName = 'blackBright' | 'redBright' | 'greenBright' | 'yellowBright' | 'blueBright' | 'magentaBright' | 'cyanBright' | 'whiteBright';
+  type BackgroundBrightColorName = 'bgBlackBright' | 'bgRedBright' | 'bgGreenBright' | 'bgYellowBright' | 'bgBlueBright' | 'bgMagentaBright' | 'bgCyanBright' | 'bgWhiteBright';
+  type ModiferName = 'reset' | 'bold' | 'dim' | 'italic' | 'underline' | 'inverse' | 'hidden' | 'strikethrough';
+  type ColorName = ForegroundColorName | BackgroundColorName;
+  type BrightColorName = ForegroundBrightColorName | BackgroundBrightColorName;
+  type AnyColorName = ColorName | BrightColorName;
+  type AnyStyleName = AnyColorName | ModiferName | 'unstyle' | 'noop';
   interface StyleFunction extends StylesType<StyleFunction> {
     (s: string): string;
+
+    stack: AnyStyleName[];
   }
 
   // modifiers
@@ -220,6 +231,9 @@ declare namespace ansiColors {
    * Remove styles from string
    */
   function unstyle(s: string): string;
+  const none: StyleFunction;
+  const clear: StyleFunction;
+  const noop: StyleFunction;
 
   const styles: StylesType<StyleType>;
   const symbols: SymbolsType;
@@ -235,52 +249,13 @@ declare namespace ansiColors {
 
 }
 
+
 interface Keys {
-
-  modifier: ('reset' |
-    'bold' |
-    'dim' |
-    'italic' |
-    'underline' |
-    'inverse' |
-    'hidden' |
-    'strikethrough')[]
-  ;
-  color: (
-    'black' | 'red' |
-    'green' | 'yellow' |
-    'blue' | 'magenta' |
-    'cyan' | 'white' |
-    'gray' | 'grey'
-  )[];
-  bg: (
-    'bgBlack' | 'bgRed' |
-    'bgGreen' | 'bgYellow' |
-    'bgBlue' | 'bgMagenta' |
-    'bgCyan' | 'bgWhite'
-  )[];
-  bright: (
-    'blackBright' |
-    'redBright' |
-    'greenBright' |
-    'yellowBright' |
-    'blueBright' |
-    'magentaBright' |
-    'cyanBright' |
-    'whiteBright'
-  )[];
-  bgBright: (
-    'bgBlackBright' |
-    'bgRedBright' |
-    'bgGreenBright' |
-    'bgYellowBright' |
-    'bgBlueBright' |
-    'bgMagentaBright' |
-    'bgCyanBright' |
-    'bgWhiteBright'
-  )[];
-
-
+  modifier: ansiColors.ModiferName[];
+  color: ansiColors.ForegroundColorName[];
+  bg: ansiColors.BackgroundColorName[];
+  bright: ansiColors.ForegroundBrightColorName[];
+  bgBright: ansiColors.BackgroundBrightColorName[];
 }
 
 export = ansiColors;
