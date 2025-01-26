@@ -230,6 +230,57 @@ declare namespace ansiColors {
   function ok(...args: string[]): string;
 
   function create(): typeof ansiColors;
+
+  let keys: Keys;
+
+}
+
+interface Keys {
+
+  modifier: ('reset' |
+    'bold' |
+    'dim' |
+    'italic' |
+    'underline' |
+    'inverse' |
+    'hidden' |
+    'strikethrough')[]
+  ;
+  color: (
+    'black' | 'red' |
+    'green' | 'yellow' |
+    'blue' | 'magenta' |
+    'cyan' | 'white' |
+    'gray' | 'grey'
+  )[];
+  bg: (
+    'bgBlack' | 'bgRed' |
+    'bgGreen' | 'bgYellow' |
+    'bgBlue' | 'bgMagenta' |
+    'bgCyan' | 'bgWhite'
+  )[];
+  bright: (
+    'blackBright' |
+    'redBright' |
+    'greenBright' |
+    'yellowBright' |
+    'blueBright' |
+    'magentaBright' |
+    'cyanBright' |
+    'whiteBright'
+  )[];
+  bgBright: (
+    'bgBlackBright' |
+    'bgRedBright' |
+    'bgGreenBright' |
+    'bgYellowBright' |
+    'bgBlueBright' |
+    'bgMagentaBright' |
+    'bgCyanBright' |
+    'bgWhiteBright'
+  )[];
+
+
 }
 
 export = ansiColors;
